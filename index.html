@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="description" content="Webpage description goes here" />
+    <meta charset="utf-8">
+    <title>SLCHAT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="public/style.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <main>
+        <div class="left">
+            <img src="/public/media/placeholder.png" alt="Girl in a jacket">
+        </div>
+        <div class="right">
+            <div class="chat-container">
+                    <div class="demo-messages" id="messages">
+                        <div class="message assistant">
+                            Hi there! I’m really glad you’re here. This is a safe space where we can explore whatever’s on your mind—no pressure, no judgment. How are you feeling today?
+                        </div>
+                    </div>
+
+                    <div class="chat-input-wrapper">
+                        <div class="input-container">
+                            <textarea class="chat-input" id="chatInput" placeholder="Type your message..."
+                                rows="1"></textarea>
+                        </div>
+                        <div class="white-helper">
+                            
+                        </div>
+                        <div class="settings-buttons">
+                            <img src="/public/media/settings.svg" alt="">
+                        </div>
+                        <div class="input-buttons">
+                            <button class="record-button">
+                                <img src="/public/media/microphone.svg" alt="">
+                            </button>
+                            <button class="send-button" id="sendButton">
+                                <img src="/public/media/right.svg" alt="">
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+    </main>
+
+
+    <script>
+        const chatInput = document.getElementById('chatInput');
+        const sendButton = document.getElementById('sendButton');
+        const messages = document.getElementById('messages');
+
+        // Auto-resize textarea
+        function autoResize() {
+            chatInput.style.height = Math.min(chatInput.scrollHeight, parseInt(getComputedStyle(chatInput).maxHeight)) + 'px';
+
+            console.log(parseInt(getComputedStyle(chatInput).height));
+            console.log(parseInt(getComputedStyle(chatInput).maxHeight));
+
+    
+
+            if (parseInt(getComputedStyle(chatInput).height) > parseInt(getComputedStyle(chatInput).maxHeight) -1 ){
+                chatInput.style.overflowY = 'auto';
+            }
+        }
+
+        chatInput.addEventListener('input', () => {
+            autoResize();
+        });
+
+        // Send message
+        function sendMessage() {
+            console.log("das");
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.textContent = message;
+            messages.appendChild(userMessage);
+
+            // Clear input
+            chatInput.value = '';
+            autoResize();
+            // Simulate AI response
+            setTimeout(() => {
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'message assistant';
+                aiMessage.textContent = `I received your message: "${message}". This is a demo response!`;
+                messages.appendChild(aiMessage);
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+
+            messages.scrollTop = messages.scrollHeight;
+
+            chatInput.style.height = chatInput.style.minHeight;
+            chatInput.style.overflowY = 'hidden';
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,246 @@
+:root {
+    --main-background-color: #fffdfe;
+
+    --chat-background-color: #fff;
+
+    --bubble-background-color: #fff;
+
+    --ai-bubble-background-color: #e7e7e7;
+
+    --bubble-border: #000 1px solid;
+
+    --text-color: #000;
+
+    --font-size: 16px;
+    --padding: 20px;
+
+    
+}
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+
+    background: var(--main-background-color);
+
+    box-sizing: border-box;
+    padding: 20px;
+
+    color: var(--text-color);
+
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+}
+
+.left {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    padding-right: 10px;
+    box-sizing: border-box;
+
+}
+
+.left img {
+    width: 100%;
+    height: 100%;
+
+    border: #000 1px solid;
+    border-radius: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+    box-sizing: border-box;
+
+}
+
+.right {
+    width: auto;
+    height: 100%;
+    padding-left: 10px;
+    flex: 1;
+
+}
+
+.right .user-input {
+    width: 100%;
+}
+
+.right .user-input .input-textarea {
+    width: 100%;
+}
+
+.chat-container {
+    width: 100%;
+    height: 100%;
+    background: var(--chat-background-color);
+    border-radius: 25px;
+    padding: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid #404040;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-input-wrapper {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    align-items: center;
+    min-height: 56px;
+    width: 100%;
+    position: relative;
+}
+
+.input-container {
+    width: 100%;
+    position: relative;
+}
+
+.chat-input {
+    width: 100%;
+    min-height: 56px;
+    max-height: 300px;
+    padding: 16px 20px 75px ;
+    border: none;
+    border-radius: 15px;
+    background: var(--bubble-background-color);
+    border: var(--bubble-border);
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s ease;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #555 transparent;
+    box-sizing: border-box;
+    scroll-padding-bottom: 75px;
+    scroll-padding-top: 75px;
+    scroll-padding-block-end: 75px;
+    scroll-padding-block-start: 75px;
+}
+
+.chat-input::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-input::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-input::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 3px;
+}
+
+.chat-input:focus {
+}
+
+.chat-input::placeholder {
+    color: #888;
+}
+
+
+/* Demo messages */
+.demo-messages {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: var(--bubble-background-color);
+    border: var(--bubble-border);
+    border-radius: 16px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.message {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.message.user {
+    background: #4a9eff;
+    color: white;
+    margin-left: auto;
+}
+
+.message.assistant {
+    background: var(--ai-bubble-background-color);
+    color: #000;
+    border: 1px solid #404040;
+}
+
+.settings-buttons{
+    bottom: 15px;
+    left: 15px;
+    position: absolute;
+    z-index: 20;
+    border: #000 1px solid;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-buttons img{
+    width: 80%;
+    
+}
+
+.input-buttons{
+    bottom: 15px;
+    right: 15px;
+    position: absolute;
+    z-index: 20;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.input-buttons button{
+    border: #000 1px solid;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-buttons .record-button {
+    margin-right: 7px;
+}
+
+.input-buttons .record-button img{
+    width: 80%;
+}
+
+.input-buttons .send-button img{
+    width: 100%;
+}
+
+.white-helper{
+    background-color: white;
+    position: absolute;
+    z-index: 10;
+    bottom: 5px;
+    width: calc(100% - 30px);
+    height: 54px;
+}
+

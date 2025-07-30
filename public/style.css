@@ -60,6 +60,8 @@ main {
 
     object-fit: cover;
 
+    object-position: top center;
+
     box-sizing: border-box;
 
 }
@@ -262,11 +264,14 @@ main {
     main{
         flex-direction: column;
         padding: 10px;
+        justify-content: end;
     }
 
     .left{
         padding-right: 0px;
         flex: 1;
+        aspect-ratio: unset;
+        max-height: calc(100% - 203px);
     }
 
     .right{
@@ -278,5 +283,10 @@ main {
 
     .demo-messages{
         display: none;
+    }
+
+    .chat-input{
+        height: 150px;
+        overflow-y: visible;
     }
 }

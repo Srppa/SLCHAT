@@ -58,6 +58,8 @@
         const sendButton = document.getElementById('sendButton');
         const messages = document.getElementById('messages');
 
+        const mediaQuery = window.matchMedia('(max-width: 949px)');
+
         // Auto-resize textarea
         function autoResize() {
             chatInput.style.height = Math.min(chatInput.scrollHeight, parseInt(getComputedStyle(chatInput).maxHeight)) + 'px';
@@ -73,7 +75,11 @@
         }
 
         chatInput.addEventListener('input', () => {
-            autoResize();
+            if (!mediaQuery.matches) {
+                autoResize();
+                console.log("small");
+            }
+            
         });
 
         // Send message

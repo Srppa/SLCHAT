@@ -47,6 +47,7 @@ main {
     aspect-ratio: 1 / 1;
     padding-right: 10px;
     box-sizing: border-box;
+    max-width: calc(100% - 350px);
 
 }
 
@@ -111,15 +112,19 @@ main {
     position: relative;
 }
 
+.border-box{
+    padding: 16px 20px 75px ;
+    border: var(--bubble-border);
+    border-radius: 15px;
+}
+
 .chat-input {
     width: 100%;
     min-height: 56px;
     max-height: 300px;
-    padding: 16px 20px 75px ;
     border: none;
-    border-radius: 15px;
+    
     background: var(--bubble-background-color);
-    border: var(--bubble-border);
     font-size: 16px;
     line-height: 1.5;
     resize: none;
@@ -190,7 +195,7 @@ main {
 
 .settings-buttons{
     bottom: 15px;
-    left: 15px;
+    left: 17px;
     position: absolute;
     z-index: 20;
     border: #000 1px solid;
@@ -209,7 +214,7 @@ main {
 
 .input-buttons{
     bottom: 15px;
-    right: 15px;
+    right: 18px;
     position: absolute;
     z-index: 20;
     display: flex;
@@ -301,6 +306,7 @@ main {
         flex: 1;
         aspect-ratio: unset;
         max-height: calc(100% - 203px);
+        max-width: none;
     }
 
     .right{
@@ -317,5 +323,19 @@ main {
     .chat-input{
         height: 150px;
         overflow-y: visible;
+    }
+
+    .chat-container{
+        padding: 0px;
+    }
+
+    .border-box{
+        border: none;
+        border-radius: 0;
+    }
+
+    .settings-buttons,
+    .input-buttons button{
+        border-radius: 10px;
     }
 }

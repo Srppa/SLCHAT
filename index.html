@@ -40,13 +40,18 @@
                             <img src="/public/media/settings.svg" alt="">
                         </div>
                         <div class="input-buttons">
-                            <button class="record-button">
-                                <img src="/public/media/microphone.svg" alt="">
-                            </button>
-                            <button class="send-button" id="sendButton">
-                                <img src="/public/media/right.svg" alt="">
-                            </button>
+                        <div class="recording-indicator">
+                            <img class="audio-recording-controls hide" src="/public/media/red-circle.svg" alt="">
                         </div>
+                        <button class="record-button" id="recordVoiceButton">
+                            <img class="basic-controls" src="/public/media/microphone.svg" alt="">
+                            <img class="audio-recording-controls hide" src="/public/media/cross.svg" alt="">
+                        </button>
+                        <button class="send-button" id="sendButton">
+                            <img class="basic-controls" src="/public/media/right.svg" alt="">
+                            <img class="audio-recording-controls hide" src="/public/media/check-mark.svg" alt="">
+                        </button>
+                    </div>
                         
                     </div>
                 </div>
@@ -56,9 +61,13 @@
     <script>
         const chatInput = document.getElementById('chatInput');
         const sendButton = document.getElementById('sendButton');
+        const recordVoiceButton = document.getElementById('recordVoiceButton');
         const messages = document.getElementById('messages');
 
         const mediaQuery = window.matchMedia('(max-width: 949px)');
+
+        var isRecording = false;
+        var recognition;
 
         // Auto-resize textarea
         function autoResize() {
@@ -84,7 +93,23 @@
 
         // Send message
         function sendMessage() {
-            console.log("das");
+
+            if(isRecording){
+
+                console.log("end recording");
+
+                document.querySelectorAll('.audio-recording-controls').forEach(btn => {
+                    btn.classList.add('hide');
+                });
+                document.querySelectorAll('.basic-controls').forEach(btn => {
+                    btn.classList.remove('hide');
+                });
+
+                isRecording = false;
+
+                return;
+            }
+
             const message = chatInput.value.trim();
             if (!message) return;
 
@@ -113,6 +138,50 @@
         }
 
         sendButton.addEventListener('click', sendMessage);
+
+        function recordVoice() {
+
+            console.log("click");
+
+            if (isRecording) {
+
+
+                document.querySelectorAll('.audio-recording-controls').forEach(btn => {
+                    btn.classList.add('hide');
+                });
+                document.querySelectorAll('.basic-controls').forEach(btn => {
+                    btn.classList.remove('hide');
+                });
+
+                isRecording = false;
+
+                return;
+            }
+
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+
+                    console.log("start");
+                    isRecording = true;
+
+                    document.querySelectorAll('.basic-controls').forEach(btn => {
+                        btn.classList.add('hide');
+                    });
+                    document.querySelectorAll('.audio-recording-controls').forEach(btn => {
+                        btn.classList.remove('hide');
+                    });
+
+
+                    
+                })
+                .catch(err => {
+                    console.error('Microphone access denied:', err);
+                });
+        }
+
+        recordVoiceButton.addEventListener('click', recordVoice);
+
+
     </script>
 
 </body>

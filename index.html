@@ -12,37 +12,52 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <main>
         <div class="left">
-            <img src="/public/media/placeholder.png" alt="Girl in a jacket">
+            <img class="terapeut-window" id="terapeutWindow" src="/public/media/placeholder.png" alt="Girl in a jacket" >
+            <div class="demo-messages mobile-messages hide" id="mobileMessages">
+                <div class="message assistant">
+                    Hi there! I’m really glad you’re here. This is a safe space where we can explore whatever’s on your
+                    mind—no pressure, no judgment. How are you feeling today?
+                </div>
+            </div>
         </div>
         <div class="right">
             <div class="chat-container">
-                    <div class="demo-messages" id="messages">
-                        <div class="message assistant">
-                            Hi there! I’m really glad you’re here. This is a safe space where we can explore whatever’s on your mind—no pressure, no judgment. How are you feeling today?
-                        </div>
+                <div class="demo-messages full-messages" id="messages">
+                    <div class="message assistant">
+                        Hi there! I’m really glad you’re here. This is a safe space where we can explore whatever’s on
+                        your mind—no pressure, no judgment. How are you feeling today?
                     </div>
+                </div>
 
-                    <div class="chat-input-wrapper">
-                        <div class="input-container">
-                            <div class="border-box">
-                                <textarea class="chat-input" id="chatInput" placeholder="Type your message..."
+                <div class="chat-input-wrapper">
+                    <div class="input-container">
+                        <div class="border-box">
+                            <textarea class="chat-input" id="chatInput" placeholder="Type your message..."
                                 rows="1"></textarea>
-                            </div>
-                            
                         </div>
-                        <div class="white-helper">
-                            
-                        </div>
-                        <div class="settings-buttons">
+
+                    </div>
+                    <div class="white-helper">
+
+                    </div>
+                    <div class="settings-buttons">
+                        
+                        <button class="change-settings-button" id="changeSettingsButton">
                             <img src="/public/media/settings.svg" alt="">
-                        </div>
-                        <div class="input-buttons">
+                        </button>
+                        <button class="change-view-button" id="changeViewButton">
+                            <img class="chat-icon" id="chatIcon" src="/public/media/chat-bubble.svg" alt="">
+                            <img class="person-icon hide" id="personIcon" src="/public/media/person.svg" alt="">
+                        </button>
+                    </div>
+                    <div class="input-buttons">
                         <div class="recording-indicator">
                             <img class="audio-recording-controls hide" src="/public/media/red-circle.svg" alt="">
                         </div>
@@ -55,9 +70,9 @@
                             <img class="audio-recording-controls hide" src="/public/media/check-mark.svg" alt="">
                         </button>
                     </div>
-                        
-                    </div>
+
                 </div>
+            </div>
     </main>
 
 
@@ -65,11 +80,14 @@
         const chatInput = document.getElementById('chatInput');
         const sendButton = document.getElementById('sendButton');
         const recordVoiceButton = document.getElementById('recordVoiceButton');
+        const changeViewButton = document.getElementById('changeViewButton');
         const messages = document.getElementById('messages');
+        const mobileMessages = document.getElementById('mobileMessages');
 
         const mediaQuery = window.matchMedia('(max-width: 949px)');
 
         var isRecording = false;
+        var isAvatarOn = true;
         var recognition;
 
         // Auto-resize textarea
@@ -79,9 +97,9 @@
             console.log(parseInt(getComputedStyle(chatInput).height));
             console.log(parseInt(getComputedStyle(chatInput).maxHeight));
 
-    
 
-            if (parseInt(getComputedStyle(chatInput).height) > parseInt(getComputedStyle(chatInput).maxHeight) -1 ){
+
+            if (parseInt(getComputedStyle(chatInput).height) > parseInt(getComputedStyle(chatInput).maxHeight) - 1) {
                 chatInput.style.overflowY = 'auto';
             }
         }
@@ -91,13 +109,13 @@
                 autoResize();
                 console.log("small");
             }
-            
+
         });
 
         // Send message
         function sendMessage() {
 
-            if(isRecording){
+            if (isRecording) {
 
                 console.log("end recording");
 
@@ -121,6 +139,7 @@
             userMessage.className = 'message user';
             userMessage.textContent = message;
             messages.appendChild(userMessage);
+            mobileMessages.appendChild(userMessage);
 
             // Clear input
             chatInput.value = '';
@@ -131,6 +150,7 @@
                 aiMessage.className = 'message assistant';
                 aiMessage.textContent = `I received your message: "${message}". This is a demo response!`;
                 messages.appendChild(aiMessage);
+                mobileMessages.appendChild(aiMessage);
                 messages.scrollTop = messages.scrollHeight;
             }, 1000);
 
@@ -175,7 +195,7 @@
                     });
 
 
-                    
+
                 })
                 .catch(err => {
                     console.error('Microphone access denied:', err);
@@ -184,6 +204,40 @@
 
         recordVoiceButton.addEventListener('click', recordVoice);
 
+
+        // Send message
+        function changeView() {
+
+            if(isAvatarOn){
+
+                isAvatarOn = false;
+
+                document.getElementById('terapeutWindow').classList.add('hide');
+
+                document.getElementById('mobileMessages').classList.remove('hide');
+                
+
+                document.getElementById('personIcon').classList.remove('hide');
+
+                document.getElementById('chatIcon').classList.add('hide');
+
+            }
+            else{
+
+                isAvatarOn = true;
+
+                document.getElementById('terapeutWindow').classList.remove('hide');
+
+                document.getElementById('mobileMessages').classList.add('hide');
+
+                document.getElementById('personIcon').classList.add('hide');
+
+                document.getElementById('chatIcon').classList.remove('hide');
+            }
+            
+        }
+
+        changeViewButton.addEventListener('click', changeView);
 
     </script>
 

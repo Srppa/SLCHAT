@@ -139,7 +139,7 @@
             userMessage.className = 'message user';
             userMessage.textContent = message;
             messages.appendChild(userMessage);
-            mobileMessages.appendChild(userMessage);
+            mobileMessages.appendChild(userMessage.cloneNode(true));
 
             // Clear input
             chatInput.value = '';
@@ -150,7 +150,7 @@
                 aiMessage.className = 'message assistant';
                 aiMessage.textContent = `I received your message: "${message}". This is a demo response!`;
                 messages.appendChild(aiMessage);
-                mobileMessages.appendChild(aiMessage);
+                mobileMessages.appendChild(aiMessage.cloneNode(true));
                 messages.scrollTop = messages.scrollHeight;
             }, 1000);
 

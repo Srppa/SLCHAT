@@ -136,10 +136,6 @@ main {
     scrollbar-width: thin;
     scrollbar-color: #555 transparent;
     box-sizing: border-box;
-    scroll-padding-bottom: 75px;
-    scroll-padding-top: 75px;
-    scroll-padding-block-end: 75px;
-    scroll-padding-block-start: 75px;
 }
 
 .chat-input::-webkit-scrollbar {
@@ -210,6 +206,10 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.settings-buttons .change-view-button{
+    display: none;
 }
 
 
@@ -293,10 +293,6 @@ main {
     display: none;
 }
 
-.change-view-button {
-    display: none;
-}
-
 .change-settings-button {
     margin-right: 7px;
 }
@@ -304,6 +300,16 @@ main {
 .mobile-messages{
     width: 100%;
     height: 100%;
+    max-height: 100%;
+}
+
+@media screen and (min-width: 750px){
+    #terapeutWindow{
+        display: block;
+    }
+    #mobileMessages{
+        display: none;
+    }
 }
 
 @media screen and (max-width: 750px) {
@@ -335,7 +341,9 @@ main {
 
     .chat-input {
         height: 150px;
-        overflow-y: visible;
+        padding-bottom: 50px;
+        box-sizing: border-box;
+        overflow-y: auto !important;
     }
 
     .chat-container {
@@ -356,4 +364,14 @@ main {
     .change-view-button {
         display: block
     }
+
+    .settings-buttons .change-view-button{
+        display: flex;
+    }
+
+    .settings-buttons > button{
+        border-radius: 10px;
+    }
+
+    
 }

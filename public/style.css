@@ -303,6 +303,19 @@ main {
     max-height: 100%;
 }
 
+.questionnaire-window-inner{
+    position: absolute;
+    display: none;
+    max-width: 80%;
+    left: 10%;
+    top: 25%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 25px;
+    border: solid 1px black;
+    text-align: center;
+}
+
 @media screen and (min-width: 750px){
     #terapeutWindow{
         display: block;

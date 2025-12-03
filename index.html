@@ -18,13 +18,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
 
-    
+
 </head>
 
 <body>
     <main>
         <div class="left">
-            <img class="terapeut-window" id="terapeutWindow" src="/public/media/placeholder.png" alt="Girl in a jacket" >
+            <img class="terapeut-window" id="terapeutWindow" src="/public/media/placeholder.png" alt="Girl in a jacket">
             <div class="demo-messages mobile-messages hide" id="mobileMessages">
                 <div class="message assistant">
                     Hi there! I’m really glad you’re here. This is a safe space where we can explore whatever’s on your
@@ -53,7 +53,7 @@
 
                     </div>
                     <div class="settings-buttons">
-                        
+
                         <button class="change-settings-button" id="changeSettingsButton">
                             <img src="/public/media/settings.svg" alt="">
                         </button>
@@ -79,6 +79,10 @@
                 </div>
             </div>
     </main>
+    <div id="questionnaireWindow" class="questionnaire-window">
+        <h3>Prosíme o zpětnou vazbu</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue vitae felis id sodales. Aenean congue maximus orci, in tempor orci pulvinar ut. In hac habitasse platea dictumst. Cras ut commodo nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet est aliquam, sagittis risus ac, gravida velit. Etiam at aliquet orci. Cras et sollicitudin eros. Mauris leo diam, maximus eget congue vitae, rutrum vel tellus. Vivamus vel tincidunt tortor, et faucibus magna. Donec vel mollis ligula, suscipit eleifend nunc. Nam sed augue dolor. Pellentesque vitae commodo tortor.</p>
+    </div>
 
 
     <script>
@@ -213,21 +217,21 @@
         // Send message
         function changeView() {
 
-            if(isAvatarOn){
+            if (isAvatarOn) {
 
                 isAvatarOn = false;
 
                 document.getElementById('terapeutWindow').classList.add('hide');
 
                 document.getElementById('mobileMessages').classList.remove('hide');
-                
+
 
                 document.getElementById('personIcon').classList.remove('hide');
 
                 document.getElementById('chatIcon').classList.add('hide');
 
             }
-            else{
+            else {
 
                 isAvatarOn = true;
 
@@ -239,10 +243,22 @@
 
                 document.getElementById('chatIcon').classList.remove('hide');
             }
-            
+
         }
 
         changeViewButton.addEventListener('click', changeView);
+
+        hasUnsavedChanges = true;
+
+        window.addEventListener('beforeunload', (e) => {
+            let window = document.getElementById("questionnaireWindow");
+            window.style.display = "block";
+            if (hasUnsavedChanges) {
+                
+                e.preventDefault();
+                e.returnValue = 'asdf'; // Modern browsers ignore custom messages
+            }
+        });
 
     </script>
 

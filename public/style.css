@@ -21,6 +21,12 @@
     box-sizing: border-box;
 }
 
+body {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    margin: 0;
+}
+
 main {
     display: flex;
     flex-direction: row;
@@ -38,8 +44,7 @@ main {
 
     color: var(--text-color);
 
-    font-family: "Roboto", sans-serif;
-    font-optical-sizing: auto;
+
 }
 
 .left {
@@ -208,7 +213,7 @@ main {
     justify-content: center;
 }
 
-.settings-buttons .change-view-button{
+.settings-buttons .change-view-button {
     display: none;
 }
 
@@ -297,30 +302,136 @@ main {
     margin-right: 7px;
 }
 
-.mobile-messages{
+.mobile-messages {
     width: 100%;
     height: 100%;
     max-height: 100%;
 }
 
-.questionnaire-window-inner{
+.questionnaire-window {
+    display: block;
+    visibility: hidden;
     position: absolute;
-    display: none;
-    max-width: 80%;
-    left: 10%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(256, 256, 256, 0.8)
+}
+
+.questionnaire-window-inner {
+    position: absolute;
+    display: block;
+    max-width: 50%;
+    left: 25%;
     top: 25%;
     background-color: #fff;
-    padding: 20px;
+    padding: 30px;
     border-radius: 25px;
     border: solid 1px black;
     text-align: center;
 }
 
-@media screen and (min-width: 750px){
-    #terapeutWindow{
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 45px;
+    height: 25px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 17px;
+    width: 17px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(20px);
+}
+
+.questions {
+    width: 430px;
+    margin: auto;
+}
+
+.questions>div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+}
+
+.questions>div>span {
+    margin-right: 10px;
+}
+
+.questionnaire-window-inner button {
+    border: #000 1px solid;
+    border-radius: 5px;
+    width: 120px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto 0px;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 600;
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+@media screen and (min-width: 750px) {
+    #terapeutWindow {
         display: block;
     }
-    #mobileMessages{
+
+    #mobileMessages {
         display: none;
     }
 }
@@ -378,13 +489,13 @@ main {
         display: block
     }
 
-    .settings-buttons .change-view-button{
+    .settings-buttons .change-view-button {
         display: flex;
     }
 
-    .settings-buttons > button{
+    .settings-buttons>button {
         border-radius: 10px;
     }
 
-    
+
 }

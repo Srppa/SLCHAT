@@ -80,8 +80,38 @@
             </div>
     </main>
     <div id="questionnaireWindow" class="questionnaire-window">
-        <h3>Prosíme o zpětnou vazbu</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue vitae felis id sodales. Aenean congue maximus orci, in tempor orci pulvinar ut. In hac habitasse platea dictumst. Cras ut commodo nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet est aliquam, sagittis risus ac, gravida velit. Etiam at aliquet orci. Cras et sollicitudin eros. Mauris leo diam, maximus eget congue vitae, rutrum vel tellus. Vivamus vel tincidunt tortor, et faucibus magna. Donec vel mollis ligula, suscipit eleifend nunc. Nam sed augue dolor. Pellentesque vitae commodo tortor.</p>
+        <div class="questionnaire-window-inner">
+            <h3>Prosíme o zpětnou vazbu</h3>
+            <p>V rámci studie o zbírání feedbacku na by jsme se vás rádi zeptali na několik otázek. Lorem ipsum dolor
+                sit amet, consectetur adipiscing elit. Phasellus congue vitae felis id sodales.</p>
+            <div class="questions">
+                <!-- Rounded switch -->
+                <div>
+                    <span>Dovoluji poskytnout anonymizovanou konverzaci</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div>
+                    <span>Dovoluji poskytnout tématické schrnutí konverzace</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div>
+                    <span>Odpovím na závěrečný dotazník</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <button class="send-button" id="sendButton">
+                odeslat
+            </button>
+        </div>
     </div>
 
 
@@ -98,6 +128,9 @@
         var isRecording = false;
         var isAvatarOn = true;
         var recognition;
+
+
+
 
         // Auto-resize textarea
         function autoResize() {
@@ -252,9 +285,10 @@
 
         window.addEventListener('beforeunload', (e) => {
             let window = document.getElementById("questionnaireWindow");
-            window.style.display = "block";
+            //window.style.display = "block";
+            window.style.visibility = "visible";
             if (hasUnsavedChanges) {
-                
+
                 e.preventDefault();
                 e.returnValue = 'asdf'; // Modern browsers ignore custom messages
             }

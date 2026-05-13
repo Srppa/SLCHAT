@@ -677,9 +677,9 @@
 
         changeViewButton.addEventListener('click', changeView);
 
-        hasUnsavedChanges = true;
-
-        window.addEventListener('beforeunload', (e) => {
+        hasUnsavedChanges = false;
+        //stop
+        /*window.addEventListener('beforeunload', (e) => {
             let window = document.getElementById("questionnaireWindow");
             //window.style.display = "block";
             window.style.visibility = "visible";
@@ -688,84 +688,76 @@
                 e.preventDefault();
                 e.returnValue = 'asdf'; // Modern browsers ignore custom messages
             }
-        });
+        });*/
 
 
 
 
 
+        function morphSVGPath(elementId, d1, d2, options = {}) {
+            const {
+                duration = 400,
+                pause = 1200,
+                loop = true,
+                easing = 'easeInOut'
+            } = options;
 
+            const path = document.getElementById(elementId);
+            if (!path) {
+                console.warn(`morphSVGPath: element #${elementId} not found`);
+                return null;
+            }
 
+            const easings = {
+                easeInOut: t => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+                easeIn: t => t * t,
+                easeOut: t => t * (2 - t),
+                linear: t => t
+            };
 
+            const easeFn = easings[easing] || easings.easeInOut;
 
-
-
-
-
-
-        const path = document.getElementById('path3');
-
-        const d1 = `m 165.98998,241.98622 c 2.48136,1.82369 6.57235,3.3239 8.5475,3.11676 7.62961,-0.80013 26.01029,-0.7452 41.38264,-0.11242 3.77247,0.15529 5.81603,-1.95043 7.65073,-3.0609`;
-
-        const d2 = `m 165.98998,241.98622 c 2.48136,1.82369 3.93825,2.26851 7.58187,4.8549 3.64362,2.58639 36.63839,1.81106 41.38264,0.27383 4.74424,-1.53723 6.78166,-4.07482 8.61636,-5.18529`;
-
-        // Use GSAP if available, otherwise use CSS animation via SMIL
-        if (typeof gsap !== 'undefined' && gsap.registerPlugin) {
-            // GSAP with MorphSVG approach
-            gsap.to('#path180', {
-                attr: { d: d2 },
-                duration: 0.1,
-                ease: 'power1.inOut',
-                yoyo: true,
-                repeat: -1,
-                repeatDelay: 0.2
-            });
-        } else {
-            // Pure JS requestAnimationFrame interpolation
-            const duration = 100; // ms
-            const pause = 200;   // ms between morphs
-            let startTime = null;
-            let forward = true;
-            let waiting = false;
-            let waitStart = null;
-
-            // Parse a path d string into an array of numbers
             function parseNumbers(d) {
                 return d.match(/-?[\d.]+(?:e[-+]?\d+)?/g).map(Number);
             }
 
-            // Rebuild the path string by replacing numbers in the template
             function buildPath(template, nums) {
                 let i = 0;
-                return template.replace(/-?[\d.]+(?:e[-+]?\d+)?/g, () => {
-                    const v = nums[i++];
-                    // Keep reasonable decimal places
-                    return parseFloat(v.toFixed(5));
-                });
+                return template.replace(/-?[\d.]+(?:e[-+]?\d+)?/g, () =>
+                    parseFloat(nums[i++].toFixed(5))
+                );
             }
+
+            function lerp(a, b, t) { return a + (b - a) * t; }
 
             const nums1 = parseNumbers(d1);
             const nums2 = parseNumbers(d2);
 
-            function lerp(a, b, t) { return a + (b - a) * t; }
-
-            function easeInOut(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+            let startTime = null;
+            let forward = true;
+            let waiting = false;
+            let waitStart = null;
+            let rafId = null;
+            let stopped = false;
 
             function animate(ts) {
+                if (stopped) return;
+
                 if (waiting) {
                     if (ts - waitStart >= pause) {
                         waiting = false;
+                        if (!loop && !forward) return; // stop after one round trip
                         forward = !forward;
                         startTime = ts;
                     }
-                    requestAnimationFrame(animate);
+                    rafId = requestAnimationFrame(animate);
                     return;
                 }
 
                 if (!startTime) startTime = ts;
                 const elapsed = ts - startTime;
                 const raw = Math.min(elapsed / duration, 1);
-                const t = easeInOut(forward ? raw : 1 - raw);
+                const t = easeFn(forward ? raw : 1 - raw);
 
                 const interpolated = nums1.map((n, i) => lerp(n, nums2[i], t));
                 path.setAttribute('d', buildPath(d1, interpolated));
@@ -775,13 +767,106 @@
                     waitStart = ts;
                 }
 
-                requestAnimationFrame(animate);
+                rafId = requestAnimationFrame(animate);
             }
 
-            requestAnimationFrame(animate);
+            rafId = requestAnimationFrame(animate);
+
+            // Return controls
+            return {
+                stop() { stopped = true; cancelAnimationFrame(rafId); },
+                pause() { stopped = true; cancelAnimationFrame(rafId); },
+                resume() { stopped = false; startTime = null; rafId = requestAnimationFrame(animate); },
+                morphTo(target) {
+                    // Jump to d1 or d2 instantly
+                    path.setAttribute('d', target === 'd2' ? d2 : d1);
+                }
+            };
         }
 
 
+        const lipPath = 'path3';
+
+        const lip1 = `m 165.98998,241.98622 c 2.48136,1.82369 6.57235,3.3239 8.5475,3.11676 7.62961,-0.80013 26.01029,-0.7452 41.38264,-0.11242 3.77247,0.15529 5.81603,-1.95043 7.65073,-3.0609`;
+
+        const lip2 = `m 165.98998,241.98622 c 2.48136,1.82369 3.93825,2.26851 7.58187,4.8549 3.64362,2.58639 36.63839,1.81106 41.38264,0.27383 4.74424,-1.53723 6.78166,-4.07482 8.61636,-5.18529`;
+
+        const innerPath = 'path28';
+
+        const inner1 = `m 165.92572,242.42737 6.82806,3.14091 23.21538,-0.68281 21.84977,0.40969 6.28181,-3.00435 -0.68281,-0.81937 -5.87212,3.14091 -21.44009,-0.54624 -23.21538,0.6828 -6.82805,-3.00434 z`;
+
+        const inner2 = `m 165.92572,242.42737 9.72496,5.65155 19.7391,0.66908 20.49788,-1.7147 8.21308,-4.74249 -0.68281,-0.81937 -5.87212,3.14091 -21.44009,-0.54624 -23.21538,0.6828 -6.82805,-3.00434 z`;
+
+
+        async function loopMouth() {
+
+            while (true) {
+
+                let duration = 100 + Math.random() * 50;
+
+                morphSVGPath(lipPath, lip1, lip2, {
+                    duration: duration,
+                    pause: 100,
+                    loop: false,
+                    easing: 'easeOut'  // 'easeInOut' | 'easeIn' | 'easeOut' | 'linear'
+                });
+
+                morphSVGPath(innerPath, inner1, inner2, {
+                    duration: duration,
+                    pause: 100,
+                    loop: false,
+                    easing: 'easeOut'  // 'easeInOut' | 'easeIn' | 'easeOut' | 'linear'
+                });
+
+                // random delay between 100–200 ms
+                await new Promise(resolve =>
+                    setTimeout(resolve, 500 + Math.random() * 500)
+                );
+            }
+        }
+
+        loopMouth();
+
+        const lidLeft = 'path8';
+
+        const lidLeft1 = `m 229.83631,212.6601 c 4.23339,0.48698 17.00599,0.54362 20.07447,-0.12174 0.0641,-0.78712 -1.22904,-1.0957 -9.83239,-1.12005 -8.73991,0 -10.24208,0.43828 -10.24208,1.24179 z`;
+
+        const lidLeft2 = `m 229.83631,228.21605 c 4.23339,6.5874 17.00599,7.35357 20.07447,-1.64678 0.0641,-10.6474 -1.22904,-14.82158 -9.83239,-15.15096 -8.73991,0 -10.24208,5.92863 -10.24208,16.79774 z`;
+
+        const lidRight = 'path8-6';
+
+        const lidRight1 = `m 140.65948,212.46151 c 4.23339,0.48698 17.00599,0.54362 20.07447,-0.12174 0.0641,-0.78712 -1.22904,-1.0957 -9.83239,-1.12005 -8.73991,0 -10.24208,0.43828 -10.24208,1.24179 z`;
+
+        const lidRight2 = `m 141.47885,228.01747 c 4.23339,6.58739 17.00599,7.35356 20.07447,-1.64678 0.0641,-10.64741 -1.22904,-14.82159 -9.83239,-15.15097 -8.73991,0 -10.24208,5.92863 -10.24208,16.79775 z`;
+        
+        async function loopLids() {
+
+            while (true) {
+
+                let duration = 25;
+
+                morphSVGPath(lidLeft, lidLeft1, lidLeft2, {
+                    duration: duration,
+                    pause: 100,
+                    loop: false,
+                    easing: 'easeOut'  // 'easeInOut' | 'easeIn' | 'easeOut' | 'linear'
+                });
+
+                morphSVGPath(lidRight, lidRight1, lidRight2, {
+                    duration: duration,
+                    pause: 100,
+                    loop: false,
+                    easing: 'easeOut'  // 'easeInOut' | 'easeIn' | 'easeOut' | 'linear'
+                });
+
+                // random delay between 100–200 ms
+                await new Promise(resolve =>
+                    setTimeout(resolve, 2000 + Math.random() * 500)
+                );
+            }
+        }
+
+        loopLids();
 
     </script>
 

@@ -279,7 +279,7 @@
 
                     let temp = source.cloneNode(true);
 
-                    let tempLeft = getRandomMinMax(0, maxWidth * 2);
+                    let tempLeft = getRandomMinMax(0, maxWidth * 3);
 
                     let tempTop = getRandomMinMax(0, maxHeight * 3);
 
@@ -350,14 +350,14 @@
 
                 //TODO disable příště
                 // Disable browser's automatic scroll restoratio
-                /*
+                
                 if ('scrollRestoration' in history) {
                     history.scrollRestoration = 'manual';
                 }
         
                 window.addEventListener('load', () => {
                     window.scrollTo(0, 0);
-                });*/
+                });
 
                 function removeAboveViewport(element) {
                     const removedHeight = element.offsetHeight;

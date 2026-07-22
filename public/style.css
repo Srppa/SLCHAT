@@ -27,7 +27,7 @@ body {
     margin: 0;
 }
 
-main {
+main.bot {
     display: flex;
     flex-direction: row;
     width: 100dvw;
@@ -503,37 +503,55 @@ input:checked+.slider:before {
 
 /*----------Design----------*/
 
-main{
+main.design{
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex: 0 0 auto;
+    width: 200%;
 }
 
-.background-div{
-    position: absolute;
-    left: 0;
-    top: 0;
+.left-side,
+.right-side{
     width: 100%;
-    height: 100vh;
 }
+
 
 svg {
     overflow: visible !important;
 }
 
+.background-fix{
+    width: 100%;
+    
+}
+
 .background{
-    overflow-y: hidden;
-    overflow-x: hidden;
+    position: relative;
+    z-index: -10;
+    width: 100%;
 }
 
 .blobs-div{
     display: none;
 }
 
+.full-pages{
+    width: 100%;
+    height: 100vh;
+}
+
+.welcome-page{
+    
+}
+
 
 .welcome-div {
     width: 800px;
     text-align: center;
-    margin: 200px auto;
+    padding-top: 100px;
+    margin: auto;
     
 }
 
@@ -547,22 +565,82 @@ svg {
     font-size: 21px;
     line-height: 1.8;
 }
-/**
+
+
+
+
+
 body{
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
-**/
+
 .button{
-    display: block;
-    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 35px auto;
     font-size: 25px;
+    padding: 10px;
     font-weight: 600;
     cursor: pointer;
+    max-width: 200px;
+    border: 2px solid black;
+    border-radius: 5px;
 }
 
 html{
     scroll-behavior: auto;
 }
+
+.welcome-div .arrow{
+    width: 30px;
+    margin-left: 10px;
+}
+
+
+.texts-content-div{
+    padding-top: 50px;
+}
+
+.texts-nav{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 40px;
+}
+
+.texts-nav a {
+    font-size: 21px;
+    margin: 0 20px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    user-select: none;
+}
+
+.texts-text{
+    max-width: 800px;
+    margin: 40px auto;
+
+    
+}
+
+.texts-text p{
+    max-width: 800px;
+    margin: 10px auto;
+    font-size: 20px;
+    text-align: justify;
+    
+}
+
+.texts-text h3{
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
 
 
 /*----------Design End---------- */

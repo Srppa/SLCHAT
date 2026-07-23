@@ -571,8 +571,6 @@ svg {
 
 
 body{
-    overflow-x: hidden;
-    overflow-y: hidden;
 }
 
 .button{
@@ -647,3 +645,14 @@ html{
 
 
 /*----------Design----------*/
+
+
+.design2 .background img{
+ position: absolute;
+}
+
+.background{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+}

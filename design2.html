@@ -21,10 +21,13 @@
 
 </head>
 
-<body>
-    <div class="background-fix">
-        <div id="background" class="background"></div>
-    </div>
+<body class="design2">
+        <div id="background" class="background">
+            <img src="/shapes/shape_1.png">
+            <img style="right: 200px" src="/shapes/shape_2.png">
+            <img style="right: -500px; bottom: -400px;" src="/shapes/shape_3.png">
+        </div>
+    
 
     </div>
     <main class="design">
@@ -258,117 +261,117 @@
     </div>
 
     <footer>
-    </footer>
+        < </footer>
 
-    <script>
-
-
+            <script>
 
 
-        const colors = ["#f5a9b8", "#5bcefa"]
-
-        const blobsDatabase = document.getElementById("blobsDatabase").children;
-
-        const background = document.getElementById("background");
-
-        let currentBlobs = [];
-
-        let maxWidth = window.innerWidth;
-
-        let maxHeight = window.innerHeight;
-
-        /*for (let i = 0; i < 30; i++) {
-            let source = blobsDatabase[getRandomInt(blobsDatabase.length)];
-
-            let temp = source.cloneNode(true);
-
-            let tempLeft = getRandomMinMax(0, maxWidth * 3);
-
-            let tempTop = getRandomMinMax(0, maxHeight * 3);
-
-            let tempSize = getRandomMinMax(700, 2000);
-
-            let tempRotation = getRandomMinMax(0, 360);
-
-            let colorIndex = getRandomInt(2);
-
-            temp.style.fill = colors[colorIndex];
-
-            temp.style.position = "absolute"
-
-            temp.style.left = tempLeft - tempSize / 2 + "px"
-
-            temp.style.top = tempTop - tempSize / 2 + "px"
-
-            temp.style.transformBox = "fill-box";
-            temp.style.transformOrigin = "center";
-
-            temp.style.transform = `rotate(${tempRotation}deg)`;
-
-            console.log(temp.style.transform);
-
-            temp.setAttribute("width", tempSize);
-
-            temp.setAttribute("height", tempSize);
-
-            background.append(temp);
-        }*/
 
 
-        document.getElementById('continueButton').addEventListener('click', welcomeScroll);
+                const colors = ["#f5a9b8", "#5bcefa"]
 
-        document.getElementById('icButton').addEventListener('click', icScroll);
+                const blobsDatabase = document.getElementById("blobsDatabase").children;
 
-        //scrollRightOverTime(1500, 10000, background);
+                const background = document.getElementById("background");
 
-        function getRandomInt(max) {
-            return Math.floor(Math.random() * max);
-        }
+                let currentBlobs = [];
 
-        function getRandomMinMax(min, max) {
-            return Math.random() * (max - min) + min;
-        }
+                let maxWidth = window.innerWidth;
 
-        function welcomeScroll() {
-            const vh = window.innerHeight;
-            window.scrollBy({
-                top: vh,
-                left: 0,
-                behavior: 'smooth'
-            });
-        }
+                let maxHeight = window.innerHeight;
 
-        function icScroll() {
-            const vh = window.innerHeight;
-            const vw = window.innerWidth;
-            window.scrollBy({
-                top: -vh,
-                left: vw,
-                behavior: 'smooth'
-            });
-            document.body.style.overflowY = "scroll";
+                /*for (let i = 0; i < 30; i++) {
+                    let source = blobsDatabase[getRandomInt(blobsDatabase.length)];
 
-        }
+                    let temp = source.cloneNode(true);
+
+                    let tempLeft = getRandomMinMax(0, maxWidth * 3);
+
+                    let tempTop = getRandomMinMax(0, maxHeight * 3);
+
+                    let tempSize = getRandomMinMax(700, 2000);
+
+                    let tempRotation = getRandomMinMax(0, 360);
+
+                    let colorIndex = getRandomInt(2);
+
+                    temp.style.fill = colors[colorIndex];
+
+                    temp.style.position = "absolute"
+
+                    temp.style.left = tempLeft - tempSize / 2 + "px"
+
+                    temp.style.top = tempTop - tempSize / 2 + "px"
+
+                    temp.style.transformBox = "fill-box";
+                    temp.style.transformOrigin = "center";
+
+                    temp.style.transform = `rotate(${tempRotation}deg)`;
+
+                    console.log(temp.style.transform);
+
+                    temp.setAttribute("width", tempSize);
+
+                    temp.setAttribute("height", tempSize);
+
+                    background.append(temp);
+                }*/
 
 
-        //TODO disable příště
-        // Disable browser's automatic scroll restoratio
+                document.getElementById('continueButton').addEventListener('click', welcomeScroll);
 
-        if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'manual';
-        }
+                document.getElementById('icButton').addEventListener('click', icScroll);
 
-        window.addEventListener('load', () => {
-            window.scrollTo(0, 0);
-        });
+                //scrollRightOverTime(1500, 10000, background);
 
-        function removeAboveViewport(element) {
-            const removedHeight = element.offsetHeight;
-            element.remove();
-            window.scrollBy(0, -removedHeight);
-        }
+                function getRandomInt(max) {
+                    return Math.floor(Math.random() * max);
+                }
 
-    </script>
+                function getRandomMinMax(min, max) {
+                    return Math.random() * (max - min) + min;
+                }
+
+                function welcomeScroll() {
+                    const vh = window.innerHeight;
+                    window.scrollBy({
+                        top: vh,
+                        left: 0,
+                        behavior: 'smooth'
+                    });
+                }
+
+                function icScroll() {
+                    const vh = window.innerHeight;
+                    const vw = window.innerWidth;
+                    window.scrollBy({
+                        top: -vh,
+                        left: vw,
+                        behavior: 'smooth'
+                    });
+                    document.body.style.overflowY = "scroll";
+                    
+                }
+
+
+                //TODO disable příště
+                // Disable browser's automatic scroll restoratio
+                
+                if ('scrollRestoration' in history) {
+                    history.scrollRestoration = 'manual';
+                }
+        
+                window.addEventListener('load', () => {
+                    window.scrollTo(0, 0);
+                });
+
+                function removeAboveViewport(element) {
+                    const removedHeight = element.offsetHeight;
+                    element.remove();
+                    window.scrollBy(0, -removedHeight);
+                }
+
+            </script>
 
 </body>
 
